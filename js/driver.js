@@ -47,15 +47,31 @@ function getPlayerChoice() {
 function playRound(playerSelection,
                    computerSelection) {
   if (playerSelection === computerSelection) {
+    alert("It`s draw!");
     return 0;
-  } else if ((playerSelection == "rock" && 
-             computerSelection == "scissors") ||
-             (playerSelection == "paper" &&
-             computerSelection == "rock") ||
-             (playerSelection == "scissors" &&
-             computerSelection == "paper")) {
+  } else if (playerSelection == "rock" && 
+             computerSelection == "scissors") {
+    alert("Rock beats scissors. You won this round!");
     return 1;
-  } else {
+  } else if (playerSelection == "paper" &&
+             computerSelection == "rock") {
+    alert("Paper beats rock. You won this round!");
+    return 1;
+  } else if (playerSelection == "scissors" &&
+             computerSelection == "paper") {
+    alert("Scissors beat paper. You won this round!");
+    return 1;    
+  } else if (computerSelection == "paper" &&
+             playerSelection == "rock") {
+    alert("Paper beats rock. You lost this round!");
+    return -1;
+  } else if (computerSelection == "scissors" &&
+             playerSelection == "paper") {
+    alert("Scissors beat paper. You lost this round!");
+    return -1;
+  } else if (computerSelection == "rock" &&
+             playerSelection == "scissors") {
+    alert("Rock beats scissors. You lost this round!");
     return -1;
   }
 }

@@ -92,7 +92,7 @@ function game() {
   }
 }
 
-while (true) {
-  resetGame();
-  game();
-}
+//while (true) {
+//  resetGame();
+//  game();
+//}

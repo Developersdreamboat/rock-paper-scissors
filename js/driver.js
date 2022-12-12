@@ -1,16 +1,21 @@
 "use strict"
 
-let playerPoints;
+let playerChoice;
+let computerChoice;
+
+let playerPoints = 0;
+let computerPoints = 0;
 let round;
 
-function getComputerChoice() {
+
+function setComputerChoice() {
   let choice = getRandomInt(1, 3);
   if (choice === 1) {
-    return "rock";
+    computerChoice = "rock";
   } else if (choice === 2) {
-    return "paper";
+    computerChoice = "paper";
   } else if (choice === 3) {
-    return "scissors";
+    computerChoice = "scissors";
   }
 }
 
@@ -20,16 +25,6 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min); 
 }
 
-function getPlayerChoice() {
-  //let choice = ;
-  //if (choice == "rock" || choice == "paper" || choice == "scissors") {
-  //      return choice;
-  //} else {
-  //      round -= 1;
-  //      alert("Your input is not correct. Try again!");
-  //      return 0;
-  //}
-}
 
 // rock < paper; rock > scissors
 // paper > rock; paper < scissors
@@ -42,57 +37,75 @@ function getPlayerChoice() {
 //rock < paper, paper < scissors, scissors < rock
 
 
-function playRound(playerSelection,
-                   computerSelection) {
-  if (playerSelection === computerSelection) {
-    alert("It`s draw!");
-    return 0;
-  } else if (playerSelection == "rock" && 
-             computerSelection == "scissors") {
-    alert("Rock beats scissors. You won this round!");
-    return 1;
-  } else if (playerSelection == "paper" &&
-             computerSelection == "rock") {
-    alert("Paper beats rock. You won this round!");
-    return 1;
-  } else if (playerSelection == "scissors" &&
-             computerSelection == "paper") {
-    alert("Scissors beat paper. You won this round!");
-    return 1;    
-  } else if (computerSelection == "paper" &&
-             playerSelection == "rock") {
-    alert("Paper beats rock. You lost this round!");
-    return -1;
-  } else if (computerSelection == "scissors" &&
-             playerSelection == "paper") {
-    alert("Scissors beat paper. You lost this round!");
-    return -1;
-  } else if (computerSelection == "rock" &&
-             playerSelection == "scissors") {
-    alert("Rock beats scissors. You lost this round!");
-    return -1;
+function enrollRound(caller) {
+  let message;
+  
+  playerChoice = caller.id;
+  setComputerChoice();
+  
+  if (playerChoice === computerChoice) {
+    message = "Draw!";
+  } else if (playerChoice == "rock" && 
+             computerChoice == "scissors") {
+    message = "Rock beats scissors. You won this round!";
+    playerPoints += 1;
+  } else if (playerChoice == "paper" &&
+             computerChoice == "rock") {
+    playerPoints += 1;
+    message = "Paper beats rock. You won this round!";
+  } else if (playerChoice == "scissors" &&
+             computerChoice == "paper") {
+    playerPoints += 1;
+    message = "Scissors beat paper. You won this round!";
+  } else if (computerChoice == "paper" &&
+             playerChoice == "rock") {
+    message = "Paper beats rock. You lost this round!";
+    computerPoints += 1;
+  } else if (computerChoice == "scissors" &&
+             playerChoice == "paper") {
+    computerPoints += 1;
+    message = "Scissors beat paper. You lost this round!";
+  } else if (computerChoice == "rock" &&
+             playerChoice == "scissors") {
+    computerPoints += 1;
+    message = "Rock beats scissors. You lost this round!";
+  }
+  document.querySelector('#player-result').textContent = playerPoints;
+  document.querySelector('#computer-result').textContent = computerPoints;
+  document.querySelector('#round-result').textContent = message;
+}
+
+function playGame() {
+  if (playerPoints != 5 && computerPoints != 5) {
+    enrollRound(this);
+    
+    if (playerPoints == 5 || computerPoints == 5) {
+      document.querySelector('.game').style.cssText = "display: none;";
+      document.querySelector('.game-result').style.cssText = "display: block;";
+      if (playerPoints == 5) {
+      document.querySelector('.text-result')
+        .textContent = "Congratulations! You outplayed the computer! Try again!";
+      } else if (computerPoints == 5) {
+      document.querySelector('.text-result')
+        .textContent = "It`s a pity! You lost! Better luck next time!";
+      }
+    }
   }
 }
 
-function resetGame() {
+function restartGame() {
   playerPoints = 0;
+  computerPoints = 0;
   round = 0;
+  
+  document.querySelector('#player-result').textContent = playerPoints;
+  document.querySelector('#computer-result').textContent = computerPoints;
+  document.querySelector('.game').style.cssText = "display: block;";
+  document.querySelector('.game-result').style.cssText = "display: none;";
 }
 
-function game() {
-  for (round = 1; round <= 5; round++) {
-    playerPoints += playRound(getPlayerChoice(), getComputerChoice());
-  }
-  if (playerPoints > 0) {
-    alert("You won!");
-  } else if (playerPoints === 0) {
-    alert("Draw!");
-  } else if (playerPoints < 0) {
-    alert("You lost!");
-  }
-}
+const keys = Array.from(document.querySelectorAll(".choice > img"));
+keys.forEach(key => key.addEventListener('click', playGame));
 
-//while (true) {
-//  resetGame();
-//  game();
-//}
+const restartButton = document.querySelector('#restart');
+restartButton.addEventListener('click', restartGame);

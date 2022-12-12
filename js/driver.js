@@ -5,7 +5,6 @@ let round;
 
 function getComputerChoice() {
   let choice = getRandomInt(1, 3);
-  console.log(choice);
   if (choice === 1) {
     return "rock";
   } else if (choice === 2) {
@@ -22,15 +21,14 @@ function getRandomInt(min, max) {
 }
 
 function getPlayerChoice() {
-  let choice = prompt("Print rock, paper or scissors").toLowerCase();
-  console.log(choice);
-  if (choice == "rock" || choice == "paper" || choice == "scissors") {
-        return choice;
-  } else {
-        round -= 1;
-        alert("Your input is not correct. Try again!");
-        return 0;
-  }
+  //let choice = ;
+  //if (choice == "rock" || choice == "paper" || choice == "scissors") {
+  //      return choice;
+  //} else {
+  //      round -= 1;
+  //      alert("Your input is not correct. Try again!");
+  //      return 0;
+  //}
 }
 
 // rock < paper; rock > scissors

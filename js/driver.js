@@ -100,6 +100,7 @@ function restartGame() {
   
   document.querySelector('#player-result').textContent = playerPoints;
   document.querySelector('#computer-result').textContent = computerPoints;
+  document.querySelector('#round-result').textContent = "";
   document.querySelector('.game').style.cssText = "display: block;";
   document.querySelector('.game-result').style.cssText = "display: none;";
 }
